@@ -1,7 +1,12 @@
 package encoding
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
+
 	"github.com/Yandex-Practicum/final-project-encoding-go/models"
+	"gopkg.in/yaml.v2"
 )
 
 // JSONData тип для перекодирования из JSON в YAML
@@ -26,7 +31,16 @@ type MyEncoder interface {
 // Encoding перекодирует файл из JSON в YAML
 func (j *JSONData) Encoding() error {
 	// ниже реализуйте метод
-	// ...
+	yamlData, err := yaml.Marshal(j)
+	if err != nil {
+		return fmt.Errorf("ошибка преобразования в YAML: %w", err)
+	}
+
+	// Запись YAML в файл
+	err = os.WriteFile("output.yaml", yamlData, 0)
+	if err != nil {
+		return fmt.Errorf("ошибка записи файла: %w", err)
+	}
 
 	return nil
 }
@@ -34,7 +48,16 @@ func (j *JSONData) Encoding() error {
 // Encoding перекодирует файл из YAML в JSON
 func (y *YAMLData) Encoding() error {
 	// Ниже реализуйте метод
-	// ...
+	jsonData, err := json.Marshal(y)
+	if err != nil {
+		return fmt.Errorf("ошибка преобразования в JSON: %w", err)
+	}
+
+	// Запись YAML в файл
+	err = os.WriteFile("output.yaml", jsonData, 0)
+	if err != nil {
+		return fmt.Errorf("ошибка записи файла: %w", err)
+	}
 
 	return nil
 }
